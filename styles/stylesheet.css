@@ -1,0 +1,26 @@
+footer {
+    min-height: 100%;
+    background-color: blue;
+    padding: 1em 1em 1em 1em;
+    border-style: solid;
+    border-width: 20px;
+    border-color: rgb(236, 183, 34);
+    color: white;
+  }
+  
+  #scrollbox {
+    max-height: 100px;
+  }
+  
+  h5 {
+    background-color: blue;
+  }
+  
+  #dlresume {
+    padding: 1em 1em 1em 1em;
+  }
+  
+  row, ul {
+    padding: 1em 1em 1em 1em;
+  }
+  
