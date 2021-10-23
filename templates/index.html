@@ -11,14 +11,14 @@
 {% block content %}
   <div class="container">
     <div class="p-3 mb-2 bg-primary text-white">
-      <h1 class="display-1" color="blue">Airplane Selector</h1>
+      <h1 class="display-1 text-center" color="blue">Airplane Selector</h1>
     </div>
     
-    <form>
+    <form action="result" method="POST">
       <div class="form-row">
         <div class="col">
           <label for="starting-city">Starting City</label>
-          <select class="form-control" id="starting-city">
+          <select class="form-control" name="starting-city" id="starting-city">
             <option>Dubai</option>
             <option>Hong Kong</option>
             <option>Honolulu</option>
@@ -33,7 +33,7 @@
 
         <div class="col">
           <label for="destination-city">Destination City</label>
-          <select class="form-control" id="starting-city">
+          <select class="form-control" name="destination-city" id="destination-city">
             <option>Dubai</option>
             <option>Hong Kong</option>
             <option>Honolulu</option>
@@ -52,21 +52,21 @@
         <legend class="col-form-label col-sm-2 pt-0">Priority Select</legend>
         <div class="col-sm-10">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-            <label class="form-check-label" for="gridRadios1">
-              Range
+            <input class="form-check-input" type="radio" name="gridRadios" id="range" value="range" checked>
+            <label class="form-check-label" for="range">
+              Furthest Range
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-            <label class="form-check-label" for="gridRadios2">
-              Max Seats
+            <input class="form-check-input" type="radio" name="gridRadios" id="seats" value="seats">
+            <label class="form-check-label" for="seats">
+              Maximum Seats
             </label>
           </div>
-          <div class="form-check disabled">
-            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
-            <label class="form-check-label" for="gridRadios3">
-              Fuel Efficiency (gallons/mile)
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gridRadios" id="efficiency" value="efficiency">
+            <label class="form-check-label" for="efficiency">
+              Optimum Fuel Efficiency (gallons/mile)
             </label>
           </div>
         </div>
@@ -75,7 +75,7 @@
 
     <div class="form-group row">
       <div class="col-sm-10">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
       </div>
     </div>
   </form>
