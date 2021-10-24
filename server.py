@@ -1,9 +1,11 @@
+from bs4.element import SoupStrainer
 import requests
+import urllib
+import shutil
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request, urlretrieve
-import urllib
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -13,15 +15,41 @@ def get_distance(startingcity, destinationcity):
     response = requests.get(url).json()
     return response
 
-def scrape_plane(airplane):
+def get_soup(airplane):
     url = f'https://www.airlines-inform.com/commercial-aircraft/{airplane}.html'
     response = requests.get(url)
-
     soup = BeautifulSoup(response.content, 'html.parser')
+    return soup
 
+def get_picture(soup, i):
     picture = soup.find(class_="setWOfMe")
- 
-    return picture['src']
+    src = picture['src']
+    r = requests.get(src)
+    img_name = "img" + str(i) + ".jpg"
+    # MUST place images in static folder. Don't use /static. Use "static" to prevent absolute/relative path issue
+    with open("static/images/" + img_name, 'wb') as f:
+        f.write(r.content)
+
+    return src
+
+def get_range(soup):
+    string = soup.find("td", text="Range with max payload (km)")
+    next_string = string.find_next("td")
+    range = next_string.text.strip()
+    # must reassign to self or spaces remain
+    range = range.replace(' ', '')
+    range = int(range)
+    return range
+
+def get_seats(soup):
+    string = soup.find("td", text="Passengers (2-class)")
+    if string is None:
+        string = soup.find("td", text="Passengers (1-class)")
+    if string is None:
+        string = soup.find("td", text="Passengers (3-class)")
+    next_string = string.find_next("td")
+    seats = next_string.text.strip()
+    return seats
 
 @app.route('/')
 def index():
@@ -36,8 +64,9 @@ def result():
     startingcity = request.form['starting-city']
     destinationcity = request.form['destination-city']
     priority = request.form['gridRadios']
-    airplane_names = {"name" : ['airbus-a320neo', 'airbus-a321neo', 'airbus-a330-300', 'boeing-737-max-10', 'boeing-787-10', 
-        'bombardier-cs100', 'bombardier-cs300', 'embraer-e195-e2']}
+    airplane_names = {"name" : ['airbus-a380', 'bombardier-cs100', 'bombardier-cs300', 'embraer-e195-e2']}
+    #, 'airbus-a321neo', 'airbus-a330-300', , 'boeing-737-max-10', 'boeing-787-10', 
+    #    'bombardier-cs100', 'bombardier-cs300', 'embraer-e195-e2']}
 
     # build dictionary of dictionaries using scraper
     airplane_details = {}
@@ -45,7 +74,10 @@ def result():
         # Create dictionary or will get keyerror0
         airplane_details[i] = {}
         airplane_details[i]["name"] = airplane_names["name"][i]
-        airplane_details[i]["picture"] = scrape_plane(airplane_names["name"][i])
+        soup = get_soup(airplane_names["name"][i])
+        airplane_details[i]["picture"] = get_picture(soup, i) 
+        airplane_details[i]["range"] = get_range(soup)
+        airplane_details[i]["seats"] = get_seats(soup)
 
     distance = get_distance(startingcity, destinationcity)
     km = distance["distance"]
