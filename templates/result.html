@@ -1,15 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Here Is Your URL!</title>
-</head>
-<body>
-<h1>Here Is Your URL!</h1>
-<h2>{{startingcity}}</h2>
-<h2>{{destinationcity}}</h2>
-<h2>{{priority}}</h2>
-<h2>{{distance.distance}}</h2>
-<h2>{{miles}}</h2>
-</body>
+{% extends "bootstrap/base.html" %}
+{% block title %}
+    Airplane Selector
+{% endblock %}
+
+{% block head %}
+{{super()}}
+<link href="stylesheet" type="text/css" href="/static/stylesheet.css">  
+{% endblock %}
+
+{% block content %}
+
+<div class = "body-content">
+    <div class="container">
+      <div class="p-2 bg-primary text-white" style="padding: 1rem">
+        <h1 class="display-1 text-center" color="blue">Airplane Selector</h1>
+      </div>
+
+      <div class="d-block bg-primary text-white" style="margin-top: 1rem; margin-bottom: 2rem; padding: 1rem">
+        <h4>Results : </b> Hello airline executive! Based on your selection, the top (3) airplanes for 
+         your lease or purchase consideration are displayed.</h4>
+    </div>
+    
+    <div class="container-fluid">
+        <div class="row p-3 mb-2 bg-light text-dark">
+            <div class="col-md-4 border border-secondary">  
+                <div class="card" style="padding: 1rem">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Cras justo odio</li>
+                      <li class="list-group-item">Dapibus ac facilisis in</li>
+                      <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body">
+                      <a href="#" class="card-link">Card link</a>
+                      <a href="#" class="card-link">Another link</a>
+                    </div>
+                  </div> 
+            </div>
+            <div class="col-md-4">
+               Text
+            </div>
+            <div class="col-md-4"> 
+                Test
+            </div>
+         </div>
+     </div>
+
+    <h4>Starting City: {{startingcity}}</h2>
+    <h4>Destination City: {{destinationcity}}</h2>
+    <h4>Priority: {{priority}}</h2>
+    <h4>Distance (km): {{distance.distance}}</h2>
+    <h4>Distance (mi): {{miles}}</h2>
+    <h4>{{airplane_details[0]["picture"]}}</h4>
+
+<form action="reset" method="GET">
+    <button type="submit" class="btn btn-primary" value="Reset">Reset</button>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://kit.fontawesome.com/015d63ce65.js" crossorigin="anonymous"></script>
+<script>
+  $(function() {
+    $('[data-popover]').popover();
+    $('[data-toggle="tooltip"]').tooltip()
+  });
+</script>
+{% endblock %}
 </html>

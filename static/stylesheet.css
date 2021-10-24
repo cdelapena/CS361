@@ -8,6 +8,9 @@ footer {
     color: white;
   }
   
+  span {
+    padding: 20px;
+  }
   #scrollbox {
     max-height: 100px;
   }
@@ -23,4 +26,7 @@ footer {
   row, ul {
     padding: 1em 1em 1em 1em;
   }
-  
+
+  div {
+      padding: 5em;
+  }
