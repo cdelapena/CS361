@@ -1,4 +1,5 @@
 import requests
+import os
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from bs4 import BeautifulSoup
@@ -157,4 +158,5 @@ def result():
     destinationcity=destinationcity, priority=priority, airplane_details=airplane_details)
 
 if __name__ == '__main__' :
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 4517))
+    app.run(port=port, debug=True)
